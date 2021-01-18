@@ -7,11 +7,18 @@ public class Item {
     private String name;
     private LocalDateTime created = LocalDateTime.now();
 
-    public Item(){}
-    public Item(int id){
+    public Item() {
+    }
+
+    public Item(int id) {
         this.id = id;
     }
-    public Item(int id, String name){
+
+    public Item(String name) {
+        this.name = name;
+    }
+
+    public Item(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -41,7 +48,6 @@ public class Item {
         return "Item{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", created=" + created +
                 '}';
     }
 }
