@@ -20,8 +20,7 @@ public class PhoneDictionary {
         for (Person findPerson : persons) {
             if (findPerson.getName().contains(key) || findPerson.getSurname().contains(key)
                     || findPerson.getPhone().contains(key) || findPerson.getAddress().contains(key)) {
-                result = persons;
-                break;
+                result.add(findPerson);
             }
         }
         return result;
