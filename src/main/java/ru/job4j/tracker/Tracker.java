@@ -1,7 +1,6 @@
 package ru.job4j.tracker;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public final class Tracker {
@@ -9,13 +8,13 @@ public final class Tracker {
 
     private final List<Item> items = new ArrayList<>();
     private int ids = 1;
-    private int size = 0;
+    //private int size = 0;
 
     private Tracker() {
     }
 
-    public static Tracker getInstance(){
-        if (instance == null){
+    public static Tracker getInstance() {
+        if (instance == null) {
             instance = new Tracker();
         }
         return instance;
@@ -23,7 +22,7 @@ public final class Tracker {
 
     public Item add(Item item) {
         item.setId(ids++);
-        items.set(size++, item);
+        items.add(item);
         return item;
     }
 
@@ -36,20 +35,19 @@ public final class Tracker {
         return List.copyOf(items);
     }
 
-    public Item[] findByName(String key) {
-        int count = 0;
-        Item[] itemsResult = new Item[items.size()];
-        for (int i = 0; i < size; i++) {
-            if (items.get(i).getName().equals(key)) {
-                itemsResult[count++] = items.get(i);
+    public List<Item> findByName(String key) {
+        List<Item> itemsResult = new ArrayList<>();
+        for (Item item : items) {
+            if (item.getName().equals(key)) {
+                itemsResult.add(item);
             }
         }
-        return Arrays.copyOf(itemsResult, count);
+        return List.copyOf(itemsResult);
     }
 
     private int indexOf(int id) {
         int rsl = -1;
-        for (int index = 0; index < size; index++) {
+        for (int index = 0; index < items.size(); index++) {
             if (items.get(index).getId() == id) {
                 rsl = index;
                 break;
@@ -72,9 +70,7 @@ public final class Tracker {
         int index = indexOf(id);
         boolean rsl = index != -1;
         if (rsl) {
-            System.arraycopy(items, index + 1, items, index, size - index);
-            items.set(size - 1, null);
-            size--;
+            items.remove(index);
         }
         return rsl;
     }
