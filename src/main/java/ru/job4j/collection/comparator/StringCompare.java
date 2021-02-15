@@ -9,8 +9,8 @@ public class StringCompare implements Comparator<String> {
         for (int i = 0; i < length; i++) {
             char lefts = left.charAt(i);
             char rights = right.charAt(i);
-            if (lefts != rights){
-                return Character.compare(lefts,rights);
+            if (lefts != rights) {
+                return Character.compare(lefts, rights);
             }
         }
         return Integer.compare(left.length(), right.length());

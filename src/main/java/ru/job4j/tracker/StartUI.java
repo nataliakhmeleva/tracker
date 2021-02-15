@@ -4,6 +4,7 @@ package ru.job4j.tracker;
 import java.util.List;
 
 public class StartUI {
+
     private final Output out;
 
     public StartUI(Output out) {
@@ -35,7 +36,8 @@ public class StartUI {
         Output output = new ConsoleOutput();
         Input input = new ValidateInput(new ConsoleInput(), output);
         Tracker tracker = Tracker.getInstance();
-        List<UserAction> actions = List.of(new CreateAction(output), new ShowAction(output), new ReplaceAction(output),
+        List<UserAction> actions = List
+            .of(new CreateAction(output), new ShowAction(output), new ReplaceAction(output),
                 new DeleteAction(output), new FindByIdAction(output), new FindByNameAction(output),
                 new ExitAction());
         new StartUI(output).init(input, tracker, actions);
