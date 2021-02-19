@@ -15,8 +15,12 @@ public class Departments {
             String start = "";
             for (String el : value.split("/")) {
                 if (start.equals("")) {
+<<<<<<< HEAD
                     start = el;
                     tmp.add(start);
+=======
+                    tmp.add(start = el);
+>>>>>>> origin/master
                 } else {
                     tmp.add(start + "/" + el);
                 }
@@ -26,10 +30,18 @@ public class Departments {
     }
 
     public static void sortAsc(List<String> orgs) {
+<<<<<<< HEAD
         orgs.sort(Comparator.naturalOrder());
     }
 
     public static void sortDesc(List<String> orgs) {
         orgs.sort(new DepDescComp());
+=======
+        Collections.sort(orgs, Comparator.naturalOrder());
+    }
+
+    public static void sortDesc(List<String> orgs) {
+        Collections.sort(orgs, new DepDescComp());
+>>>>>>> origin/master
     }
 }
