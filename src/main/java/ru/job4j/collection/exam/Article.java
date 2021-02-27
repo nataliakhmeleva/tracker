@@ -9,9 +9,12 @@ public class Article {
     public static boolean generateBy(String origin, String line) {
         Set<String> originSet = new HashSet<>(
             Arrays.asList(origin.split("\\s*(\\s|,|!|;|:|\\.)\\s*")));
-        Set<String> lineSet = new HashSet<>(
-            Arrays.asList(line.split("\\s*(\\s|,|!|;|:|\\.)\\s*")));
-        return originSet.containsAll(lineSet);
+        for (String sets : line.split("\\s*(\\s|,|!|;|:|\\.)\\s*")) {
+            if (!originSet.contains(sets)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 
