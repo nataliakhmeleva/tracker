@@ -17,6 +17,7 @@ public class ProfilesTest {
         profiles.add(new Profile(new Address("Samara", "Pushkina", 12, 103)));
         profiles.add(new Profile(new Address("Irkutsk", "Lomonosova", 42, 47)));
         profiles.add(new Profile(new Address("Moscow", "Tverskaya", 85, 73)));
+        profiles.add(new Profile(new Address("Samara", "Pushkina", 12, 103)));
         profiles.add(new Profile(new Address("Saint Petersburg", "Griboedova", 100, 6)));
     }
 
@@ -25,11 +26,11 @@ public class ProfilesTest {
         Profiles files = new Profiles();
         List<Address> expected = new ArrayList<>();
         List<Address> rsl = files.collect(profiles);
-        expected.add(new Address("Ufa", "Borodinskaya", 5, 20));
-        expected.add(new Address("Samara", "Pushkina", 12, 103));
         expected.add(new Address("Irkutsk", "Lomonosova", 42, 47));
         expected.add(new Address("Moscow", "Tverskaya", 85, 73));
         expected.add(new Address("Saint Petersburg", "Griboedova", 100, 6));
+        expected.add(new Address("Samara", "Pushkina", 12, 103));
+        expected.add(new Address("Ufa", "Borodinskaya", 5, 20));
         assertThat(rsl, is(expected));
     }
 }
