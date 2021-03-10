@@ -8,9 +8,8 @@ public class MapStreams {
 
     public Map<String, Student> collect(List<Student> students) {
         return students.stream()
-            .distinct()
             .collect(
-                Collectors.toMap(Student::getSurname, e -> e, (e1, e2) -> e1.equals(e2) ? e1 : e2));
+                Collectors.toMap(Student::getSurname, e -> e, (e1, e2) -> e1));
     }
 
 }
