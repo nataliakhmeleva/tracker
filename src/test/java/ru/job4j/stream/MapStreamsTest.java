@@ -34,7 +34,6 @@ public class MapStreamsTest {
         expected.put("Surname1", new Student(10, "Surname1"));
         expected.put("Surname2", new Student(20, "Surname2"));
         expected.put("Surname3", new Student(30, "Surname3"));
-        //expected.put("Surname5", new Student(40, "Surname5"));
         expected.put("Surname5", new Student(40, "Surname5"));
         expected.put("Surname6", new Student(60, "Surname6"));
         expected.put("Surname7", new Student(70, "Surname7"));
