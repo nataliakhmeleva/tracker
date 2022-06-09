@@ -32,18 +32,6 @@ public class SqlTracker implements Store, AutoCloseable {
         }
     }
 
-    public void createTable() {
-        try (Statement statement = cn.createStatement()) {
-            statement
-                .execute(String.format("create table if not exists  items (%s, %s, %s);",
-                    "id serial primary key",
-                    "name varchar(255)",
-                    "created timestamp"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void close() throws Exception {
         if (cn != null) {
@@ -104,11 +92,7 @@ public class SqlTracker implements Store, AutoCloseable {
         try (PreparedStatement statement = cn.prepareStatement("select * from items")) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    items.add(new Item(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getTimestamp("created").toLocalDateTime())
-                    );
+                    items.add(returnItem(resultSet));
                 }
             }
         } catch (Exception e) {
@@ -125,11 +109,7 @@ public class SqlTracker implements Store, AutoCloseable {
             statement.setString(1, key);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    items.add(new Item(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getTimestamp("created").toLocalDateTime())
-                    );
+                    items.add(returnItem(resultSet));
                 }
             }
         } catch (Exception e) {
@@ -145,16 +125,20 @@ public class SqlTracker implements Store, AutoCloseable {
             .prepareStatement("select * from items where id = ?")) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    item = new Item(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getTimestamp("created").toLocalDateTime());
+                if (resultSet.next()) {
+                    item = returnItem(resultSet);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return item;
+    }
+
+    public Item returnItem(ResultSet resultSet) throws SQLException {
+        return new Item(
+            resultSet.getInt("id"),
+            resultSet.getString("name"),
+            resultSet.getTimestamp("created").toLocalDateTime());
     }
 }
