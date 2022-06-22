@@ -2,6 +2,7 @@ package ru.job4j.tracker;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
 import org.hamcrest.core.IsNull;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -28,14 +29,14 @@ public class SqlTrackerTest {
     @BeforeClass
     public static void initConnection() {
         try (InputStream in = SqlTrackerTest.class.getClassLoader()
-            .getResourceAsStream("test.properties")) {
+                .getResourceAsStream("test.properties")) {
             Properties config = new Properties();
             config.load(in);
             Class.forName(config.getProperty("driver-class-name"));
             connection = DriverManager.getConnection(
-                config.getProperty("url"),
-                config.getProperty("username"),
-                config.getProperty("password")
+                    config.getProperty("url"),
+                    config.getProperty("username"),
+                    config.getProperty("password")
             );
         } catch (Exception e) {
             throw new IllegalStateException(e);
@@ -57,18 +58,16 @@ public class SqlTrackerTest {
     @Test
     public void whenSaveItemAndFindByGeneratedIdThenMustBeTheSame() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item item = new Item("item");
-        tracker.add(item);
+        Item item = tracker.add(new Item("item"));
         assertThat(tracker.findById(item.getId()), is(item));
     }
 
     @Test
     public void whenReplace() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item item = new Item("item");
-        tracker.add(item);
+        Item item = tracker.add(new Item("item"));
         int id = item.getId();
-        Item item1 = new Item("item1");
+        Item item1 = tracker.add(new Item("item1"));
         tracker.replace(id, item1);
         assertThat(tracker.findById(id).getName(), is("item1"));
     }
@@ -76,8 +75,7 @@ public class SqlTrackerTest {
     @Test
     public void whenDelete() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item item = new Item("item");
-        tracker.add(item);
+        Item item = tracker.add(new Item("item"));
         int id = item.getId();
         tracker.delete(id);
         assertThat(tracker.findById(id), is(IsNull.nullValue()));
@@ -86,18 +84,15 @@ public class SqlTrackerTest {
     @Test
     public void whenFindAll() {
         SqlTracker tracker = new SqlTracker(connection);
-        List<Item> items = new ArrayList<>(List.of(new Item(1, "Item name1", LocalDateTime.now()),
-            new Item(2, "Item name2", LocalDateTime.now())
-        ));
-        items.forEach(tracker::add);
-        assertThat(tracker.findAll(), is(items));
+        Item item = tracker.add(new Item("item"));
+        Item item1 = tracker.add(new Item("item1"));
+        assertThat(tracker.findAll(), is(List.of(item, item1)));
     }
 
     @Test
     public void whenFindByName() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item item = new Item("item");
-        tracker.add(item);
+        Item item = tracker.add(new Item("item"));
         assertThat(tracker.findByName(item.getName()), is(List.of(item)));
     }
 }
