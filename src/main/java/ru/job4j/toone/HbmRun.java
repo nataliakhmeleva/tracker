@@ -30,7 +30,7 @@ public class HbmRun {
                     .setParameter("fId", user.getId())
                     .getSingleResult();
             stored.getMessengers().forEach(System.out::println);
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             StandardServiceRegistryBuilder.destroy(registry);
@@ -43,14 +43,5 @@ public class HbmRun {
         session.persist(model);
         session.getTransaction().commit();
         session.close();
-    }
-
-    public static <T> List<T> findAll(Class<T> cl, SessionFactory sf) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        List<T> list = session.createQuery("from " + cl.getName(), cl).list();
-        session.getTransaction().commit();
-        session.close();
-        return list;
     }
 }
