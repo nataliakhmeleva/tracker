@@ -4,10 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.hamcrest.core.IsNull;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import ru.job4j.tracker.Item;
 
 import java.io.InputStream;
@@ -48,7 +45,7 @@ public class SqlTrackerTest {
         connection.close();
     }
 
-    @After
+    @Before
     public void wipeTable() throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement("delete from items")) {
             statement.execute();
